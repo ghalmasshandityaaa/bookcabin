@@ -11,6 +11,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/sirupsen/logrus"
+	_ "modernc.org/sqlite"
 )
 
 type GormDB struct {
@@ -28,10 +29,15 @@ func NewGormDB(conf *config.Config, log *logrus.Logger) *GormDB {
 		Logger:                 gormLogger,
 	}
 
-	db, err := gorm.Open(sqlite.Open(fmt.Sprintf("pkg/database/%s", conf.Database.File)), gormConf)
-
+	dsn := fmt.Sprintf("file:database/%s", conf.Database.File)
+	sqlDB, err := sql.Open("sqlite", dsn)
 	if err != nil {
 		panic(fmt.Errorf("failed open database connection: %v", err))
+	}
+
+	db, err := gorm.Open(sqlite.Dialector{Conn: sqlDB}, gormConf)
+	if err != nil {
+		panic(fmt.Errorf("gorm failed to use database connection: %v", err))
 	}
 
 	sqldb, err := db.DB()
