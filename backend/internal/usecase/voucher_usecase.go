@@ -1,9 +1,12 @@
 package usecase
 
 import (
+	"bookcabin-backend/internal/entity"
 	"bookcabin-backend/internal/model"
 	"bookcabin-backend/internal/repository"
+	"bookcabin-backend/internal/util"
 	"context"
+	"fmt"
 
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
@@ -47,6 +50,41 @@ func (v *VoucherUseCase) Generate(ctx context.Context, request *model.GenerateVo
 	logger := v.Log.WithField("method", method)
 	logger.Trace("BEGIN")
 
+	db := v.DB.WithContext(ctx)
+	isExists, err := v.VoucherRepository.IsExists(db, request.FlightNumber, request.FlightDate)
+	if err != nil {
+		panic(err)
+	}
+
+	if isExists {
+		return nil, fmt.Errorf("vouchers/already-exists")
+	}
+
+	assignedSeats, err := v.VoucherRepository.FindAssignedSeats(db, request.FlightDate, request.AircraftType)
+	if err != nil {
+		panic(err)
+	}
+
+	seats, err := util.GenerateUniqueSeats(assignedSeats, request.AircraftType)
+	if err != nil {
+		return nil, err
+	}
+
+	voucher := entity.NewVoucher(&entity.CreateVoucherProps{
+		CrewID:       request.CrewID,
+		CrewName:     request.CrewName,
+		FlightNumber: request.FlightNumber,
+		FlightDate:   request.FlightDate,
+		AircraftType: request.AircraftType,
+		Seat1:        seats[0],
+		Seat2:        seats[1],
+		Seat3:        seats[2],
+	})
+
+	if err = v.VoucherRepository.Create(db, voucher); err != nil {
+		panic(err)
+	}
+
 	logger.Trace("END")
-	return []string{}, nil
+	return seats, nil
 }

@@ -56,8 +56,19 @@ func NewValidator() *Validator {
 	if err != nil {
 		panic(fmt.Errorf("failed register datetime custom validation: %v", err))
 	}
-
+	err = v.RegisterValidation("alpha-with-space", alphaWithSpace)
+	if err != nil {
+		panic(fmt.Errorf("failed register alpha with space custom validation: %v", err))
+	}
 	return &Validator{Validate: v}
+}
+
+// alphaWithSpace checks if the field contains only letters and spaces
+func alphaWithSpace(fl validator.FieldLevel) bool {
+	value := fl.Field().String()
+	// Regex: ^[a-zA-Z ]+$
+	matched := regexp.MustCompile(`^[[:alpha:][:space:]]+$`).MatchString(value)
+	return matched
 }
 
 // validateEmail is a custom validation function for validating email format and domain restriction
@@ -67,11 +78,7 @@ func validateEmail(fl validator.FieldLevel) bool {
 	// Complex regex for email validation
 	regex := `^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`
 	re := regexp.MustCompile(regex)
-	if !re.MatchString(email) {
-		return false
-	}
-
-	return true
+	return re.MatchString(email)
 }
 
 // validatePassword checks if the password meets complexity requirements dynamically from config
@@ -136,11 +143,7 @@ func validateDateTime(fl validator.FieldLevel) bool {
 
 	// Format: 2006-01-02T15:04:05
 	_, err = time.Parse("2006-01-02T15:04:05", datetime)
-	if err == nil {
-		return true
-	}
-
-	return false
+	return err == nil
 }
 
 func (v *Validator) ValidateStruct(obj interface{}) []*ErrorValidation {
