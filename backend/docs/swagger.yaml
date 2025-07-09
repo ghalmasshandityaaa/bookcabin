@@ -1,0 +1,175 @@
+basePath: /api
+definitions:
+  model.AircraftType:
+    enum:
+    - ATR
+    - Airbus 320
+    - Boeing 737 Max
+    type: string
+    x-enum-varnames:
+    - ATR
+    - Airbus320
+    - Boeing737Max
+  model.CheckVoucherRequest:
+    properties:
+      date:
+        type: string
+      flightNumber:
+        maxLength: 100
+        minLength: 3
+        type: string
+    required:
+    - date
+    - flightNumber
+    type: object
+  model.CheckVoucherResponse:
+    properties:
+      exists:
+        type: boolean
+      success:
+        type: boolean
+    type: object
+  model.ErrorResponse:
+    properties:
+      errors: {}
+      success:
+        type: boolean
+    type: object
+  model.GenerateVoucherRequest:
+    properties:
+      aircraft:
+        allOf:
+        - $ref: '#/definitions/model.AircraftType'
+        enum:
+        - ATR
+        - Airbus 320
+        - Boeing 737 Max
+      date:
+        type: string
+      flightNumber:
+        maxLength: 100
+        minLength: 3
+        type: string
+      id:
+        type: string
+      name:
+        maxLength: 100
+        minLength: 2
+        type: string
+    required:
+    - aircraft
+    - date
+    - flightNumber
+    - id
+    - name
+    type: object
+  model.GenerateVoucherResponse:
+    properties:
+      seats:
+        items:
+          type: string
+        type: array
+      success:
+        type: boolean
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: ghalmas.shanditya.putra.agung@gmail.com
+    name: Ghalmas Shanditya Putra Agung
+    url: https://github.com/ghalmasshandityaaa
+  description: |-
+    This API provides comprehensive voucher management and seat assignment functionality for flight booking systems. It enables checking existing voucher assignments, generating new vouchers with random seat allocation, and managing the entire voucher lifecycle.
+
+    ## Features
+    - Check existing voucher assignments for specific flights and dates
+    - Generate vouchers with automatic random seat assignment
+    - Prevent duplicate voucher assignments
+    - RESTful API design with comprehensive error handling
+    - Request validation and structured error responses
+
+    ## Error Handling
+    All endpoints return structured error responses with appropriate HTTP status codes:
+    - 200: Success
+    - 400: Bad Request (validation errors, malformed request body, invalid parameters)
+    - 500: Internal Server Error
+
+    ## Rate Limiting
+    API requests are subject to rate limiting to ensure fair usage and system stability.
+  termsOfService: http://swagger.io/terms/
+  title: Voucher Seat Assignment API
+  version: 1.0.0
+paths:
+  /check:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint checks whether a specific flight already has vouchers
+        assigned for a given date. It helps prevent duplicate voucher assignments
+        and ensures proper voucher management.
+      parameters:
+      - description: Request body containing flight information and date to check
+          for existing vouchers
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.CheckVoucherRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully checked voucher existence status
+          schema:
+            $ref: '#/definitions/model.CheckVoucherResponse'
+        "400":
+          description: Bad request - invalid payload, unprocessable entity or validation
+            error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Check if flight has assigned vouchers
+      tags:
+      - Vouchers
+  /generate:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint generates vouchers for a specific flight with randomly
+        chosen seats. It ensures fair distribution of seats and prevents manual seat
+        selection bias. The system will automatically assign available seats to the
+        generated vouchers.
+      parameters:
+      - description: Request body containing flight details and number of vouchers
+          to generate
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.GenerateVoucherRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully generated vouchers with assigned seats
+          schema:
+            $ref: '#/definitions/model.GenerateVoucherResponse'
+        "400":
+          description: Bad request - invalid payload, unprocessable entity, validation
+            error, or insufficient available seats
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Generate vouchers with random seat assignment
+      tags:
+      - Vouchers
+schemes:
+- http
+- https
+swagger: "2.0"

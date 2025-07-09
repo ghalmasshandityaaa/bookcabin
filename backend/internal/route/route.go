@@ -29,4 +29,5 @@ func (a *Route) Setup() {
 	a.Log.Info("setting up routes")
 
 	a.SetupVoucherRoute()
+	a.SetupSwaggerRoute()
 }

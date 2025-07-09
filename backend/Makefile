@@ -93,4 +93,10 @@ clean:
 # Force rebuild
 rebuild: clean build
 
-.PHONY: help migrate-create migrate-up migrate-down migrate-clean migrate-status build run-dev run clean rebuild
+# Generate Swagger documentation
+swagger-gen:
+	@echo "Generating Swagger documentation..."
+	swag init -g cmd/main.go -o docs/
+	@echo "Swagger documentation generated in docs/"
+
+.PHONY: help migrate-create migrate-up migrate-down migrate-clean migrate-status build run-dev run clean rebuild swagger-gen

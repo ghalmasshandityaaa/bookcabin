@@ -2,6 +2,7 @@ package main
 
 import (
 	"bookcabin-backend/config"
+	_ "bookcabin-backend/docs"
 	"bookcabin-backend/internal/app"
 	"bookcabin-backend/pkg/database/gorm"
 	"bookcabin-backend/pkg/fiber"
@@ -21,6 +22,32 @@ func init() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 }
 
+// @title Voucher Seat Assignment API
+// @version 1.0.0
+// @description This API provides comprehensive voucher management and seat assignment functionality for flight booking systems. It enables checking existing voucher assignments, generating new vouchers with random seat allocation, and managing the entire voucher lifecycle.
+// @description
+// @description ## Features
+// @description - Check existing voucher assignments for specific flights and dates
+// @description - Generate vouchers with automatic random seat assignment
+// @description - Prevent duplicate voucher assignments
+// @description - RESTful API design with comprehensive error handling
+// @description - Request validation and structured error responses
+// @description
+// @description ## Error Handling
+// @description All endpoints return structured error responses with appropriate HTTP status codes:
+// @description - 200: Success
+// @description - 400: Bad Request (validation errors, malformed request body, invalid parameters)
+// @description - 500: Internal Server Error
+// @description
+// @description ## Rate Limiting
+// @description API requests are subject to rate limiting to ensure fair usage and system stability.
+// @termsOfService http://swagger.io/terms/
+// @contact.name Ghalmas Shanditya Putra Agung
+// @contact.email ghalmas.shanditya.putra.agung@gmail.com
+// @contact.url https://github.com/ghalmasshandityaaa
+// @host localhost:3000
+// @BasePath /api
+// @schemes http https
 func main() {
 	conf := config.Read()
 
@@ -60,7 +87,7 @@ func main() {
 
 	var serverShutdown sync.WaitGroup
 	go func() {
-		_ = <-signalChan
+		<-signalChan
 		log.Info("Gracefully shutting down...")
 		serverShutdown.Add(1)
 		defer serverShutdown.Done()
