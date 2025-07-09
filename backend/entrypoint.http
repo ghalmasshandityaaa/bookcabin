@@ -1,0 +1,20 @@
+### check crew voucher
+POST http://localhost:3000/api/check
+Content-Type: application/json
+
+{
+    "flightNumber": "GA102",
+    "date": "2025-07-12"
+}
+
+### generate crew voucher
+POST http://localhost:3000/api/generate
+Content-Type: application/json
+
+{
+    "name": "Sarah",
+    "id": "98123",
+    "flightNumber": "ID102",
+    "date": "2025-07-12",
+    "aircraft": "Airbus 320"
+}

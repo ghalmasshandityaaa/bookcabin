@@ -1,0 +1,52 @@
+{
+    "App": {
+        "Name": "BookCabin",
+        "Version": "1.0.0",
+        "Domain": "localhost",
+        "Host": "0.0.0.0",
+        "Port": 3000,
+        "Env": "Development",
+        "Debug": true,
+        "ReadTimeout": 5,
+        "WriteTimeout": 5,
+        "Prefork": false,
+        "SSL": true
+    },
+    "Security": {
+        "CORS": {
+            "AllowedOrigins": "http://localhost",
+            "AllowedMethods": "GET,POST,PUT,DELETE,OPTIONS",
+            "AllowCredentials": true
+        },
+        "CSRF": {
+            "Enabled": true,
+            "CookieName": "bookcabin_csrf",
+            "HeaderName": "X-CSRF-Token"
+        },
+        "RateLimit": {
+            "Duration": 60,
+            "MaxRequests": 100
+        },
+        "Cookie": {
+            "Name": "SHR-Cookie",
+            "Secure": true,
+            "HttpOnly": true,
+            "SameSite": "Lax",
+            "Domain": "localhost",
+            "MaxAge": 518400,
+            "Key": "buldjhSPzLpCxleTOlv4hzLkXtvbfnuvMtPS8DM+oKQ="
+        }
+    },
+    "Logger": {
+        "Level": 6,
+        "Pretty": false
+    },
+    "Database": {
+        "ConnMaxIdleTime": 30,
+        "ConnMaxLifetime": 3600,
+        "MaxIdleCons": 10,
+        "MaxOpenCons": 25,
+        "file": "vouchers.db",
+        "DryRun": false
+    }
+}
