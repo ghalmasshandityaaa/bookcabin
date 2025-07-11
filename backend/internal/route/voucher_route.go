@@ -1,7 +1,7 @@
 package route
 
-func (r *Route) SetupVoucherRoute() {
-	r.Log.Info("setting up voucher routes")
+func (r *Route) SetupAircraftRoute() {
+	r.Log.Info("setting up aircraft routes")
 
 	r.App.Post("/api/check", r.VoucherHandler.Check)
 	r.Log.Info("mapped {/api/check, POST} route")

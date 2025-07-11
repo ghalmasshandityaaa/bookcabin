@@ -27,12 +27,14 @@ func Bootstrap(config *BootstrapConfig) {
 
 	// init use cases
 	voucherUseCase := usecase.NewVoucherUseCase(config.DB, config.Log, voucherRepository)
+	aircraftUseCase := usecase.NewAircraftUseCase(config.DB, config.Log, voucherRepository)
 
 	// init handlers
 	voucherHandler := handler.NewVoucherHandler(config.Log, config.Validator, voucherUseCase)
+	aircraftHandler := handler.NewAircraftHandler(config.Log, config.Validator, aircraftUseCase)
 
 	// init routes
-	appRoute := route.NewRoute(config.App, config.Log, voucherHandler)
+	appRoute := route.NewRoute(config.App, config.Log, voucherHandler, aircraftHandler)
 
 	// setup routes
 	appRoute.Setup()

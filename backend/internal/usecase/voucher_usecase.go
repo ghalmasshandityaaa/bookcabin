@@ -65,7 +65,10 @@ func (v *VoucherUseCase) Generate(ctx context.Context, request *model.GenerateVo
 		panic(err)
 	}
 
-	seats, err := util.GenerateUniqueSeats(assignedSeats, request.AircraftType)
+	aircrafts := entity.NewAircraft()
+	aircraftConfig := aircrafts.GetAircraftConfig(request.AircraftType)
+
+	seats, err := util.GenerateUniqueSeats(assignedSeats, aircraftConfig)
 	if err != nil {
 		return nil, err
 	}

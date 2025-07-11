@@ -18,3 +18,7 @@ Content-Type: application/json
     "date": "2025-07-12",
     "aircraft": "Airbus 320"
 }
+
+### list aircraft seats
+GET http://localhost:3000/api/aircraft/seats?type=Airbus 320
+Content-Type: application/json

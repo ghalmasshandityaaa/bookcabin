@@ -1,7 +1,7 @@
 package util
 
 import (
-	"bookcabin-backend/internal/model"
+	"bookcabin-backend/internal/entity"
 	"fmt"
 	"math/rand"
 	"time"
@@ -9,32 +9,7 @@ import (
 
 const RANDOM_SEAT_COUNT = 3
 
-type AircraftConfig struct {
-	MaxRow int
-	Seats  []string
-}
-
-var aircraftConfigs = map[model.AircraftType]AircraftConfig{
-	model.ATR: {
-		MaxRow: 18,
-		Seats:  []string{"A", "C", "D", "F"},
-	},
-	model.Airbus320: {
-		MaxRow: 32,
-		Seats:  []string{"A", "B", "C", "D", "E", "F"},
-	},
-	model.Boeing737Max: {
-		MaxRow: 32,
-		Seats:  []string{"A", "B", "C", "D", "E", "F"},
-	},
-}
-
-func GenerateUniqueSeats(assignedSeats []string, aircraftType model.AircraftType) ([]string, error) {
-	config, ok := aircraftConfigs[aircraftType]
-	if !ok {
-		return nil, fmt.Errorf("aircraft/unsupported-type")
-	}
-
+func GenerateUniqueSeats(assignedSeats []string, config *entity.AircraftConfig) ([]string, error) {
 	// Convert assignedSeats to map for O(1) lookup
 	assignedMap := make(map[string]struct{}, len(assignedSeats))
 	for _, s := range assignedSeats {

@@ -2,7 +2,6 @@ package repository
 
 import (
 	"bookcabin-backend/internal/entity"
-	"bookcabin-backend/internal/model"
 
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
@@ -35,7 +34,7 @@ func (v *VoucherRepository) IsExists(db *gorm.DB, flightNumber, flightDate strin
 	return result == 1, nil
 }
 
-func (v *VoucherRepository) FindAssignedSeats(db *gorm.DB, flightDate string, aircraftType model.AircraftType) ([]string, error) {
+func (v *VoucherRepository) FindAssignedSeats(db *gorm.DB, flightDate string, aircraftType entity.AircraftType) ([]string, error) {
 	method := "VoucherRepository.FindAssignedSeats"
 	logger := v.Log.WithField("method", method)
 	logger.Trace("BEGIN")
@@ -62,4 +61,15 @@ func (v *VoucherRepository) FindAssignedSeats(db *gorm.DB, flightDate string, ai
 
 	logger.Trace("END")
 	return seats, nil
+}
+
+func (v *VoucherRepository) FindByAircraftType(db *gorm.DB, entities *[]entity.Voucher, aircraftType entity.AircraftType) error {
+	method := "VoucherRepository.FindByAircraftType"
+	logger := v.Log.WithField("method", method)
+	logger.Trace("BEGIN")
+
+	err := db.Debug().Where("aircraft_type = ?", aircraftType).Find(entities).Error
+
+	logger.Trace("END")
+	return err
 }
