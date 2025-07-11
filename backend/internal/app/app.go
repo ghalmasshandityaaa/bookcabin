@@ -29,10 +29,10 @@ func Bootstrap(config *BootstrapConfig) {
 	voucherUseCase := usecase.NewVoucherUseCase(config.DB, config.Log, voucherRepository)
 
 	// init handlers
-	authHandler := handler.NewVoucherHandler(config.Log, config.Validator, voucherUseCase)
+	voucherHandler := handler.NewVoucherHandler(config.Log, config.Validator, voucherUseCase)
 
 	// init routes
-	appRoute := route.NewRoute(config.App, config.Log, authHandler)
+	appRoute := route.NewRoute(config.App, config.Log, voucherHandler)
 
 	// setup routes
 	appRoute.Setup()
