@@ -50,8 +50,8 @@ func (h *AircraftHandler) ListSeats(ctx *fiber.Ctx) error {
 	errValidation := h.Validator.ValidateStruct(request)
 	if errValidation != nil {
 		return ctx.Status(fiber.StatusBadRequest).JSON(model.WebResponse[any]{
-			Ok:     false,
-			Errors: errValidation,
+			Success: false,
+			Errors:  errValidation,
 		})
 	}
 
@@ -60,7 +60,7 @@ func (h *AircraftHandler) ListSeats(ctx *fiber.Ctx) error {
 	logger.Trace("END")
 
 	return ctx.JSON(model.WebResponse[[]model.AircraftSeatResponse]{
-		Ok:   true,
-		Data: seats,
+		Success: true,
+		Data:    seats,
 	})
 }

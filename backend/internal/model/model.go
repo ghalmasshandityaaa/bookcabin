@@ -6,7 +6,7 @@ type ErrorResponse struct {
 }
 
 type WebResponse[T any] struct {
-	Ok     bool        `json:"ok"`
-	Data   T           `json:"data,omitempty"`
-	Errors interface{} `json:"errors,omitempty"`
+	Success bool        `json:"success"`
+	Data    T           `json:"data,omitempty"`
+	Errors  interface{} `json:"errors,omitempty"`
 }
