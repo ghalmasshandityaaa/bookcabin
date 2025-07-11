@@ -20,6 +20,50 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/aircraft/seats": {
+            "get": {
+                "description": "This endpoint returns a list of seats for a given aircraft type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Aircrafts"
+                ],
+                "summary": "List seats for a given aircraft type",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Aircraft type",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully listed seats",
+                        "schema": {
+                            "$ref": "#/definitions/model.AircraftSeatSwaggerResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request - invalid payload, unprocessable entity, validation error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/check": {
             "post": {
                 "description": "This endpoint checks whether a specific flight already has vouchers assigned for a given date. It helps prevent duplicate voucher assignments and ensures proper voucher management.",
@@ -114,7 +158,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "model.AircraftType": {
+        "entity.AircraftType": {
             "type": "string",
             "enum": [
                 "ATR",
@@ -126,6 +170,34 @@ const docTemplate = `{
                 "Airbus320",
                 "Boeing737Max"
             ]
+        },
+        "model.AircraftSeatResponse": {
+            "type": "object",
+            "properties": {
+                "assigned": {
+                    "type": "boolean"
+                },
+                "row_number": {
+                    "type": "integer"
+                },
+                "seat": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.AircraftSeatSwaggerResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.AircraftSeatResponse"
+                    }
+                },
+                "ok": {
+                    "type": "boolean"
+                }
+            }
         },
         "model.CheckVoucherRequest": {
             "type": "object",
@@ -182,7 +254,7 @@ const docTemplate = `{
                     ],
                     "allOf": [
                         {
-                            "$ref": "#/definitions/model.AircraftType"
+                            "$ref": "#/definitions/entity.AircraftType"
                         }
                     ]
                 },

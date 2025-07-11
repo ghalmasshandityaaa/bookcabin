@@ -28,6 +28,16 @@ func NewAircraftHandler(
 	}
 }
 
+// @Summary List seats for a given aircraft type
+// @Description This endpoint returns a list of seats for a given aircraft type
+// @Tags Aircrafts
+// @Accept json
+// @Produce json
+// @Param type query string true "Aircraft type"
+// @Success 200 {object} model.AircraftSeatSwaggerResponse "Successfully listed seats"
+// @Failure 400 {object} model.ErrorResponse "Bad request - invalid payload, unprocessable entity, validation error"
+// @Failure 500 {object} model.ErrorResponse "Internal server error"
+// @Router /aircraft/seats [get]
 func (h *AircraftHandler) ListSeats(ctx *fiber.Ctx) error {
 	method := "AircraftHandler.ListSeats"
 	logger := h.Log.WithField("method", method)

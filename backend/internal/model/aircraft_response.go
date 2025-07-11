@@ -5,3 +5,8 @@ type AircraftSeatResponse struct {
 	Seat      string `json:"seat"`
 	Assigned  bool   `json:"assigned"`
 }
+
+type AircraftSeatSwaggerResponse struct {
+	Ok   bool                   `json:"ok"`
+	Data []AircraftSeatResponse `json:"data"`
+}

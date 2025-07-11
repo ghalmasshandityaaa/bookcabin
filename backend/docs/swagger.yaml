@@ -1,6 +1,6 @@
 basePath: /api
 definitions:
-  model.AircraftType:
+  entity.AircraftType:
     enum:
     - ATR
     - Airbus 320
@@ -10,6 +10,24 @@ definitions:
     - ATR
     - Airbus320
     - Boeing737Max
+  model.AircraftSeatResponse:
+    properties:
+      assigned:
+        type: boolean
+      row_number:
+        type: integer
+      seat:
+        type: string
+    type: object
+  model.AircraftSeatSwaggerResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/model.AircraftSeatResponse'
+        type: array
+      ok:
+        type: boolean
+    type: object
   model.CheckVoucherRequest:
     properties:
       date:
@@ -39,7 +57,7 @@ definitions:
     properties:
       aircraft:
         allOf:
-        - $ref: '#/definitions/model.AircraftType'
+        - $ref: '#/definitions/entity.AircraftType'
         enum:
         - ATR
         - Airbus 320
@@ -100,6 +118,36 @@ info:
   title: Voucher Seat Assignment API
   version: 1.0.0
 paths:
+  /aircraft/seats:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint returns a list of seats for a given aircraft type
+      parameters:
+      - description: Aircraft type
+        in: query
+        name: type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully listed seats
+          schema:
+            $ref: '#/definitions/model.AircraftSeatSwaggerResponse'
+        "400":
+          description: Bad request - invalid payload, unprocessable entity, validation
+            error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: List seats for a given aircraft type
+      tags:
+      - Aircrafts
   /check:
     post:
       consumes:
