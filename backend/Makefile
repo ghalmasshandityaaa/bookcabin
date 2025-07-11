@@ -46,6 +46,9 @@ help:
 	@echo "[8] run-dev                               	Run the server in development mode(hot reload)"
 	@echo "[9] run                                   	Run the server in production mode"
 	@echo "[10] clean                                 	Clean built binaries"
+	@echo "[11] swagger-gen                           	Generate Swagger documentation"
+	@echo "[12] docker-build                           	Build Docker image"
+	@echo "[13] docker-run                             	Run Docker container"
 
 migrate-create:
 ifdef name
@@ -98,5 +101,12 @@ swagger-gen:
 	@echo "Generating Swagger documentation..."
 	swag init -g cmd/main.go -o docs/
 	@echo "Swagger documentation generated in docs/"
+
+
+docker-build:
+	docker build -t ghalmasshandityaaa/voucher-seat-assignment:latest .
+
+docker-run:
+	docker run -p 3000:3000 ghalmasshandityaaa/voucher-seat-assignment
 
 .PHONY: help migrate-create migrate-up migrate-down migrate-clean migrate-status build run-dev run clean rebuild swagger-gen
