@@ -260,58 +260,6 @@ Content-Type: application/json
 
 ---
 
-### Request/Response Models
-
-#### Check Voucher Request
-```json
-{
-    "flightNumber": "string (required)",
-    "date": "string (required, format: YYYY-MM-DD)"
-}
-```
-
-#### Generate Voucher Request
-```json
-{
-    "name": "string (required)",
-    "id": "string (required)",
-    "flightNumber": "string (required)",
-    "date": "string (required, format: YYYY-MM-DD)",
-    "aircraft": "string (required)"
-}
-```
-
-#### Seat Model
-```json
-{
-    "row_number": "integer",
-    "seat": "string",
-    "assigned": "boolean"
-}
-```
-
-#### Standard Response Format
-```json
-{
-    "success": "boolean",
-    "message": "string (optional)",
-    "data": "object (optional)",
-    "error": "string (optional)"
-}
-```
-
-### Error Handling
-
-All API endpoints return consistent error responses:
-
-```json
-{
-    "success": false,
-    "error": "Error message description",
-    "code": "ERROR_CODE"
-}
-```
-
 ### Rate Limiting
 
 The API implements rate limiting to prevent abuse:
