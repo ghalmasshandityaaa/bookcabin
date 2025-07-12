@@ -104,9 +104,9 @@ swagger-gen:
 
 
 docker-build:
-	docker build -t ghalmasshandityaaa/voucher-seat-assignment:latest .
+	docker build -t bookcabin-backend:latest .
 
 docker-run:
-	docker run -p 3000:3000 ghalmasshandityaaa/voucher-seat-assignment
+	docker run -p 4000:4000 bookcabin-backend
 
 .PHONY: help migrate-create migrate-up migrate-down migrate-clean migrate-status build run-dev run clean rebuild swagger-gen

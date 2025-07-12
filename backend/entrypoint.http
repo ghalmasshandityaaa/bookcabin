@@ -1,24 +1,58 @@
 ### check crew voucher
-POST http://localhost:3000/api/check
+POST http://localhost:4000/api/check
 Content-Type: application/json
 
 {
-    "flightNumber": "GA102",
+    "flightNumber": "GA10211",
     "date": "2025-07-12"
 }
 
+# response:
+# {
+#   "success": true,
+#   "exists": false
+# }
+
 ### generate crew voucher
-POST http://localhost:3000/api/generate
+POST http://localhost:4000/api/generate
 Content-Type: application/json
 
 {
     "name": "Sarah",
     "id": "98123",
-    "flightNumber": "ID102",
+    "flightNumber": "GA10211",
     "date": "2025-07-12",
     "aircraft": "Airbus 320"
 }
 
+# response:
+# {
+#   "success": true,
+#   "seats": [
+#     "11F",
+#     "22B",
+#     "5A"
+#   ]
+# }
+
 ### list aircraft seats
-GET http://localhost:3000/api/aircraft/seats?type=Airbus 320
+GET http://localhost:4000/api/aircraft/seats?type=ATR
 Content-Type: application/json
+
+# response
+# {
+#   "success": true,
+#   "data": [
+#     {
+#       "row_number": 1,
+#       "seat": "A",
+#       "assigned": false
+#     },
+#     {
+#       "row_number": 1,
+#       "seat": "C",
+#       "assigned": false
+#     },
+#     ...
+#   ],
+# }

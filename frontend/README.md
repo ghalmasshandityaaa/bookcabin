@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌐 BookCabin Frontend - Airline Voucher Seat Assignment
 
-## Getting Started
+> Modern React-based frontend for airline crew to generate voucher seat assignments with intuitive UI and real-time validation.
 
-First, run the development server:
+## 📋 Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+The BookCabin frontend is a Next.js application that provides airline crew members with an easy-to-use interface for generating random seat vouchers. The app features form validation, aircraft-specific configurations, and seamless integration with the backend API.
+
+## ✨ Features
+
+- **Modern UI/UX** - Clean, responsive design optimized for airline crew workflows
+- **Real-time Validation** - Instant feedback on form inputs and data validation
+- **Aircraft Selection** - Dropdown with ATR, Airbus 320, and Boeing 737 Max options
+- **Duplicate Prevention** - Checks for existing vouchers before generation
+- **Responsive Design** - Works seamlessly on desktop, tablet, and mobile devices
+- **Error Handling** - User-friendly error messages and loading states
+- **TypeScript Support** - Type safety and better development experience
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15+ (React 18+)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **State Management**: React Hooks (useState, useEffect)
+- **HTTP Client**: Fetch API
+- **Font**: Geist (Optimized by Next.js)
+- **Package Manager**: Yarn
+
+## 🚀 Getting Started
+
+### Prerequisites
+- **Node.js** (v18 or higher)
+- **Yarn** (v1.22 or higher)
+- **Backend API** running on `http://localhost:3000`
+
+### Installation
+
+1. **Navigate to frontend directory**
+   ```bash
+   cd frontend
+   ```
+
+2. **Install dependencies**
+   ```bash
+   yarn install
+   ```
+
+3. **Start development server**
+   ```bash
+   yarn dev
+   ```
+
+4. **Access the application**
+   Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## 📁 Project Structure
+
+```
+frontend/
+├── .next/                  # Next.js build output (auto-generated)
+├── node_modules/           # Node.js dependencies (auto-generated)
+├── src/                    # Source code directory
+│   ├── app/               # Next.js App Router
+│   │   ├── globals.css    # Global styles
+│   │   ├── layout.tsx     # Root layout component
+│   │   └── page.tsx       # Home page component
+│   ├── components/        # Reusable UI components
+│   │   ├── forms/        # Form-related components
+│   │   ├── ui/           # Generic UI components
+│   │   └── layout/       # Layout components
+│   ├── lib/              # Utility functions
+│   │   ├── api.ts        # API client functions
+│   │   ├── utils.ts      # Helper utilities
+│   │   └── constants.ts  # App constants
+│   └── types/            # TypeScript type definitions
+│       └── index.ts      # Shared types
+├── public/                # Static assets
+├── .gitignore            # Git ignore rules
+├── components.json       # shadcn/ui components config
+├── eslint.config.mjs     # ESLint configuration
+├── next.config.ts        # Next.js configuration
+├── next-env.d.ts         # Next.js TypeScript definitions
+├── package.json          # Dependencies and scripts
+├── postcss.config.mjs    # PostCSS configuration
+├── tailwind.config.ts    # Tailwind CSS configuration
+├── tsconfig.json         # TypeScript configuration
+└── README.md             # This file
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 Core Components
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Main Form Component
+The primary interface where crew members input:
+- **Crew Name** - Full name of the crew member
+- **Crew ID** - Unique identifier for the crew member
+- **Flight Number** - Aircraft flight identifier
+- **Flight Date** - Date in DD-MM-YY format
+- **Aircraft Type** - Dropdown selection (ATR, Airbus 320, Boeing 737 Max)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Validation System
+- **Client-side validation** for all form fields
+- **Date format validation** (DD-MM-YY)
+- **Flight number format validation**
+- **Required field validation**
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Results Display
+- **Success state** - Shows the 3 generated seat numbers
+- **Error state** - Displays user-friendly error messages
+- **Loading state** - Indicates API request in progress
