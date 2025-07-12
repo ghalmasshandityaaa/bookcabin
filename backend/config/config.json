@@ -4,7 +4,7 @@
         "Version": "1.0.0",
         "Domain": "localhost",
         "Host": "0.0.0.0",
-        "Port": 3000,
+        "Port": 4000,
         "Env": "Development",
         "Debug": true,
         "ReadTimeout": 5,
@@ -14,9 +14,8 @@
     },
     "Security": {
         "CORS": {
-            "AllowedOrigins": "http://localhost",
-            "AllowedMethods": "GET,POST,PUT,DELETE,OPTIONS",
-            "AllowCredentials": true
+            "AllowedOrigins": "*",
+            "AllowedMethods": "*"
         },
         "CSRF": {
             "Enabled": true,

@@ -9,8 +9,7 @@ import (
 
 func SetupCorsMiddleware(config *config.Config) fiber.Handler {
 	return cors.New(cors.Config{
-		AllowOrigins:     config.Security.Cors.AllowedOrigins,
-		AllowMethods:     config.Security.Cors.AllowedMethods,
-		AllowCredentials: config.Security.Cors.AllowCredentials,
+		AllowOrigins: config.Security.Cors.AllowedOrigins,
+		AllowMethods: config.Security.Cors.AllowedMethods,
 	})
 }
