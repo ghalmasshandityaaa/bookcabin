@@ -45,7 +45,7 @@ ENV TZ=Asia/Jakarta
 USER appuser
 
 # Expose default port (adjust if your app uses different port)
-EXPOSE 3000
+EXPOSE 4000
 
 # Entrypoint (use exec form for proper signal handling)
 ENTRYPOINT ["/main"]
