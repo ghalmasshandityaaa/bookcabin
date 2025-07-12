@@ -42,7 +42,7 @@ export default function SeatMap({ aircraftType, generatedSeats, onSeatsLoaded }:
       setLoading(true)
       setError(null)
 
-      const response = await fetch(`http://localhost:4000/api/aircraft/seatsss?type=${encodeURIComponent(aircraftType)}`)
+      const response = await fetch(`http://localhost:4000/api/aircraft/seats?type=${encodeURIComponent(aircraftType)}`)
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
